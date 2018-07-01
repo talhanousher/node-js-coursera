@@ -1,0 +1,15 @@
+{
+  "name": "node-express",
+  "version": "1.0.0",
+  "description": "node-express example",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "author": "Talha Nousher Ali",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
