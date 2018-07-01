@@ -1,0 +1,17 @@
+{
+  "name": "assignment-1",
+  "version": "1.0.0",
+  "description": "Assignment 1 for coursera",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "author": "Talha Nousher Ali",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0"
+  }
+}
