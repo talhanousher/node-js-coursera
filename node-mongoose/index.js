@@ -38,19 +38,29 @@ var connect = mongoose.connect(url);
 connect.then((db) => {
     console.log('Connection Successfully to the Database : ', db);
     Dishes.create({
-        name: 'testMongooseDish1',
+        name: 'testMongooseDish11121',
         description: 'testMongooseDescription1'
     })
         .then((res) => {
             console.log("Response : ", res);
-            return Dishes.find({}).exec();
+            return Dishes.findByIdAndUpdate(res._id, {
+                $set: { description: 'Updated' },
+            }, {
+                    new: true,
+                }).exec();
         })
         .then((res) => {
             console.log('Found Dishes : ', res);
-            return Dishes.remove({});
+            res.comment.push({
+                ratings: 5,
+                comment:'HEllo Heelooo',
+                author:'Talha'
+            })
+            return res.save();
+            // return Dishes.remove({});
         })
         .then((res) => {
-            console.log('Deleted Dishes : ', res);
+            console.log('Saved Dishes : ', res);
             return mongoose.connection.close();
         })
         .catch((err) => {
