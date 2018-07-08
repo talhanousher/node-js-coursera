@@ -1,0 +1,15 @@
+{
+  "name": "node-mongoose",
+  "version": "1.0.0",
+  "description": "Node Application With Mongoose ODM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "author": "Talha Nousher Ali",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.2.1"
+  }
+}
