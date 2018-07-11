@@ -13,7 +13,7 @@ var url = 'mongodb://localhost:27017';
 var connect = mongoose.connect(url);
 
 connect.then((db) => {
-    console.log('Connect Succesfully to the Server : ', db);
+    console.log('Connect Succesfully to the Server');
 }, (err) => {
     console.log('Error : ', err);
 })
