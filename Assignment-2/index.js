@@ -3,6 +3,7 @@ var http = require('http');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var cookieParser = require('cookie-parser');
 
 var promotionRouter = require('./routes/promotionsRoute');
 var leaderRouter = require('./routes/leaderRouter');
@@ -21,29 +22,40 @@ var app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(cookieParser('12345-67890-09876-54321'));
 function auth(req, res, next) {
-    console.log(req.headers);
+    console.log(req.signedCookies);
+    if (!req.signedCookies.user) {
+        var authHeader = req.headers.authorization;
+        if (!authHeader) {
+            var err = new Error('Not Authenticated');
+            res.setHeader('WWW-Authenticate', 'Basic');
+            err.status = 401;
+            return next(err);
+        }
 
-    var authHeader = req.headers.authorization;
-    if (!authHeader) {
-        var err = new Error('Not Authenticated');
-        res.setHeader('WWW-Authenticate', 'Basic');
-        err.status = 401;
-        return next(err);
-    }
-
-    var auth = new Buffer(authHeader.split(' ')[1], 'base64').toString().split(':');
-    var username = auth[0];
-    var password = auth[1];
-    if (username === 'admin' && password === 'password') {
-        next();
+        var auth = new Buffer(authHeader.split(' ')[1], 'base64').toString().split(':');
+        var username = auth[0];
+        var password = auth[1];
+        if (username === 'admin' && password === 'password') {
+            res.cookie('user', 'admin', { signed: true });
+            next();
+        } else {
+            var err = new Error('Not Authenticated');
+            res.setHeader('WWW-Authenticate', 'Basic');
+            err.status = 401;
+            return next(err);
+        }
     } else {
-        var err = new Error('Not Authenticated');
-        res.setHeader('WWW-Authenticate', 'Basic');
-        err.status = 401;
-        return next(err);
+        if (req.signedCookies.user === 'admin') {
+            next();
+        } else {
+            var err = new Error('Not Authenticated');
+            err.status = 401;
+            return next(err);
+        }
     }
+
 }
 app.use(auth);
 
