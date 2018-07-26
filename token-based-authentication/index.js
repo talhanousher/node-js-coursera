@@ -13,7 +13,7 @@ var dishesRouter = require('./routes/dishRoutes');
 var promotionRouter = require('./routes/promotionsRoute');
 var leaderRouter = require('./routes/leaderRouter');
 var users = require('./routes/user');
-var url = 'mongodb://localhost:27017';
+var url = 'mongodb://localhost:27017/test';
 // var url = config.mongoUrl;
 
 var connect = mongoose.connect(url);
