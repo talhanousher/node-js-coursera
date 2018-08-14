@@ -4,7 +4,7 @@ var leaderRouter = express.Router();
 leaderRouter.use(bodyParser.json());
 var Leaders = require('../models/leader');
 var mongoose = require('mongoose');
-
+var authenticate = require('../authenticate')
 leaderRouter.route('/')
     .get((req, res) => {
         Leaders.find({})
@@ -17,7 +17,7 @@ leaderRouter.route('/')
                 console.log('Error GET ', err);
             })
     })
-    .post((req, res) => {
+    .post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res) => {
         console.log(req.body);
         Leaders.create(req.body)
             .then((leader) => {
@@ -30,11 +30,11 @@ leaderRouter.route('/')
                 console.log('Error POST : ', err);
             })
     })
-    .put((req, res, next) => {
+    .put(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         res.statusCode = 403;
         res.end('PUT not supported');
     })
-    .delete((req, res, next) => {
+    .delete(authenticate.verifyUser, authenticate, verifyAdmin, (req, res, next) => {
         Leaders.remove({})
             .then((resp) => {
                 console.log(resp);
