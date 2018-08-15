@@ -36,7 +36,7 @@ router.post('/signup', (req, res, next) => {
       }
     });
 });
-
+ 
 
 
 router.post('/login', passport.authenticate('local'), (req, res) => {

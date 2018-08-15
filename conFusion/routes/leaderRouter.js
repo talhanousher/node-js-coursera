@@ -34,7 +34,7 @@ leaderRouter.route('/')
         res.statusCode = 403;
         res.end('PUT not supported');
     })
-    .delete(authenticate.verifyUser, authenticate, verifyAdmin, (req, res, next) => {
+    .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         Leaders.remove({})
             .then((resp) => {
                 console.log(resp);
